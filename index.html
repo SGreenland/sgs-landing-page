@@ -216,12 +216,11 @@
         <div class="logo">
           <audio src="./AUDIO/ON&ON END SAMPLE WAV1_2.wav" id="audio"></audio>
           <div class="triangleContainer">
-            <svg id="svg" width="100" height="100" onclick="play()">
+            <svg id="svg" width="100" height="100" onclick="play(), undraw()">
               <polygon
                 id="triangle"
                 points="0,0 100,0 100,100"
-                style="fill: chartreuse"
-                onclick="undraw()"
+                style="fill: chartreuse; display: grid"
               ></polygon>
               <polygon
                 id="triangle2"
@@ -262,6 +261,7 @@
     const borders = Array.from(document.getElementsByClassName("border"));
     const letters = Array.from(document.getElementsByClassName("letter"));
     const audio = document.getElementById("audio");
+    const triangle = document.getElementById("triangle");
     const playBtn = document.getElementById("triangle2");
     const pauseBtnLines = Array.from(
       document.getElementsByClassName("lineHide")
@@ -285,39 +285,43 @@
     }, 4000);
 
     const undraw = () => {
-      borders.forEach((border) => {
-        if (border.id === "left" || border.id === "right") {
-          border.style.animation = "drawY 1s linear 1.5s reverse";
-          var changeTriangles = setTimeout(() => {
-            border.style.display = "none";
-            document.getElementById("triangle").style.display = "none";
-            playBtn.style.display = "grid";
-            document.querySelector("svg").style.animation = "glow 2s ease";
-          }, 2400);
-        } else {
-          border.style.animation = "drawX 1s linear 500ms reverse";
-          setTimeout(() => {
-            border.style.display = "none";
-          }, 1400);
-        }
-      });
-      icons.forEach((item) => {
-        (item.style.animation = "grow 500ms linear reverse"),
-          setTimeout(() => (item.style.transform = "scale(0)"), 490);
-      });
-
-      setTimeout(() => {
+      if (triangle.style.display === "grid") {
         borders.forEach((border) => {
-          border.style.animation = "none";
+          if (border.id === "left" || border.id === "right") {
+            border.style.animation = "drawY 1s linear 1.5s reverse";
+            var changeTriangles = setTimeout(() => {
+              border.style.display = "none";
+              triangle.style.display = "none";
+              playBtn.style.display = "grid";
+              document.querySelector("svg").style.animation = "glow 2s ease";
+            }, 2400);
+          } else {
+            border.style.animation = "drawX 1s linear 500ms reverse";
+            setTimeout(() => {
+              border.style.display = "none";
+            }, 1400);
+          }
         });
         icons.forEach((item) => {
-          item.style.animation = "none";
+          (item.style.animation = "grow 500ms linear reverse"),
+            setTimeout(() => (item.style.transform = "scale(0)"), 490);
         });
-      }, 3000);
+
+        setTimeout(() => {
+          borders.forEach((border) => {
+            border.style.animation = "none";
+          });
+          icons.forEach((item) => {
+            item.style.animation = "none";
+          });
+        }, 3000);
+      } else {
+        return;
+      }
     };
 
     function play() {
-      if (event.target.id !== "triangle") {
+      if (triangle.style.display === "none") {
         //if play btn visible: play audio, start animation, switch to pause btn.
         if (playBtn.style.display === "grid") {
           audio.play();
