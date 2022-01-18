@@ -1,0 +1,355 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="path/to/font-awesome/css/font-awesome.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/045e778f04.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        margin: auto;
+        box-sizing: border-box;
+        padding: 0;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      #mainContainer {
+        height: 100%;
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: 1fr 300px 1fr;
+      }
+      #logoContainer {
+        width: 100%;
+        grid-row-start: 2;
+        grid-column-start: 2;
+        display: grid;
+        grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+        row-gap: 5px;
+        color: white;
+        align-items: stretch;
+        /* max-width: 320px; */
+      }
+
+      svg:hover {
+        cursor: pointer;
+      }
+
+      svg:active {
+        transform: scale(0.45);
+      }
+
+      .logo {
+        font-size: 4em;
+        font-weight: bold;
+        text-align: center;
+        display: grid;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+      }
+      .triangle {
+        opacity: 1;
+      }
+
+      .logo,
+      .triangle {
+        animation: fadeIn 2s ease-in;
+      }
+
+      svg {
+        filter: drop-shadow(1px 12px #346800);
+        animation: glow 2s 2s ease-in-out;
+        transform: scale(0.5);
+        transition: transform 200ms;
+      }
+
+      @keyframes glow {
+        0% {
+          filter: drop-shadow(1px 12px #346800);
+        }
+        50% {
+          filter: drop-shadow(12px 8px 20px #dfffc0);
+        }
+        100% {
+          filter: drop-shadow(1px 12px #346800);
+        }
+      }
+
+      .letter {
+        transform: scale(1);
+      }
+
+      @keyframes pulse {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.2);
+        }
+      }
+
+      i {
+        color: white;
+        font-size: 3em;
+        padding: 20px;
+        transform: scale(0);
+        animation: grow 1s ease-in 2s;
+      }
+
+      i:hover {
+        color: rgba(255, 255, 255, 0.452);
+      }
+
+      @keyframes grow {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .border {
+        width: 100%;
+        height: 100%;
+        /* transform: rotateY(0deg);
+        transition: 1s linear; */
+      }
+
+      #top {
+        text-align: center;
+        width: 100%;
+        grid-column-start: 2;
+        border-bottom: 4px solid white;
+        animation: drawX 1s linear;
+        position: relative;
+        top: 4px;
+      }
+
+      #right {
+        height: 0%;
+        grid-row-start: 2;
+        grid-column-start: 3;
+        border-left: 4px solid white;
+        animation: drawY 1s linear 1s;
+      }
+      #bottom {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-row-start: 3;
+        grid-column-start: 2;
+        border-top: 4px solid white;
+        animation: drawX 1s linear;
+        position: relative;
+        bottom: 4px;
+        align-content: start;
+      }
+
+      #songTitle {
+        color: white;
+        grid-column-start: 2;
+        grid-row-start: 3;
+      }
+
+      #left {
+        height: 0%;
+        grid-row-start: 2;
+        grid-column-start: 1;
+        border-right: 4px solid white;
+        animation: drawY 1s linear 1s;
+      }
+
+      .lineHide {
+        visibility: hidden;
+      }
+      .lineShow {
+        visibility: visible;
+      }
+
+      @keyframes drawX {
+        from {
+          width: 0%;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes drawY {
+        from {
+          height: 0%;
+        }
+        to {
+          height: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body style="background-color: black">
+    <div id="mainContainer">
+      <div class="border" id="top"></div>
+      <div class="border" id="right"></div>
+      <div class="border" id="bottom">
+        <a href=""><i class="fab fa-instagram"></i></a>
+        <a href=""><i class="fab fa-spotify"></i></a>
+        <a href=""><i class="fab fa-youtube"></i></a>
+      </div>
+      <div class="border" id="left"></div>
+      <div id="logoContainer">
+        <div class="logo"><div class="letter">S</div></div>
+        <div class="logo">
+          <audio src="./AUDIO/ON&ON END SAMPLE WAV1_2.wav" id="audio"></audio>
+          <div class="triangleContainer">
+            <svg id="svg" width="100" height="100" onclick="play()">
+              <polygon
+                id="triangle"
+                points="0,0 100,0 100,100"
+                style="fill: chartreuse"
+                onclick="undraw()"
+              ></polygon>
+              <polygon
+                id="triangle2"
+                points="0,0 100,50 0,100"
+                style="fill: chartreuse; display: none"
+              ></polygon>
+              <line
+                id="line"
+                class="lineHide"
+                x1="0"
+                x2="0"
+                y1="0"
+                y2="100"
+                stroke="chartreuse"
+                stroke-width="50"
+              ></line>
+              <line
+                id="line"
+                class="lineHide"
+                x1="100"
+                x2="100"
+                y1="0"
+                y2="100"
+                stroke="chartreuse"
+                stroke-width="50"
+              ></line>
+            </svg>
+          </div>
+        </div>
+        <div class="logo"><div class="letter">G</div></div>
+        <div class="logo"><div class="letter">S</div></div>
+      </div>
+      <span id="songTitle">SGS - On&On feat. NJ</span>
+    </div>
+  </body>
+  <script>
+    const icons = Array.from(document.querySelectorAll("i"));
+    const borders = Array.from(document.getElementsByClassName("border"));
+    const letters = Array.from(document.getElementsByClassName("letter"));
+    const audio = document.getElementById("audio");
+    const playBtn = document.getElementById("triangle2");
+    const pauseBtnLines = Array.from(
+      document.getElementsByClassName("lineHide")
+    );
+    window.onload = setTimeout(() => {
+      document.getElementById("left").style.height = "100%";
+      document.getElementById("right").style.height = "100%";
+      borders.forEach((border) => (border.style.animation = "none"));
+    }, 1999);
+
+    setTimeout(() => {
+      icons.forEach(
+        (item) => (
+          (item.style.transform = "scale(1)"), (item.style.animation = "none")
+        )
+      );
+    }, 2900);
+
+    setTimeout(() => {
+      document.querySelector("svg").style.animation = "none";
+    }, 4000);
+
+    const undraw = () => {
+      borders.forEach((border) => {
+        if (border.id === "left" || border.id === "right") {
+          border.style.animation = "drawY 1s linear 1.5s reverse";
+          var changeTriangles = setTimeout(() => {
+            border.style.display = "none";
+            document.getElementById("triangle").style.display = "none";
+            playBtn.style.display = "grid";
+            document.querySelector("svg").style.animation = "glow 2s ease";
+          }, 2400);
+        } else {
+          border.style.animation = "drawX 1s linear 500ms reverse";
+          setTimeout(() => {
+            border.style.display = "none";
+          }, 1400);
+        }
+      });
+      icons.forEach((item) => {
+        (item.style.animation = "grow 500ms linear reverse"),
+          setTimeout(() => (item.style.transform = "scale(0)"), 490);
+      });
+
+      setTimeout(() => {
+        borders.forEach((border) => {
+          border.style.animation = "none";
+        });
+        icons.forEach((item) => {
+          item.style.animation = "none";
+        });
+      }, 3000);
+    };
+
+    function play() {
+      if (event.target.id !== "triangle") {
+        //if play btn visible: play audio, start animation, switch to pause btn.
+        if (playBtn.style.display === "grid") {
+          audio.play();
+          letters.forEach(
+            (letter) => (letter.style.animation = "pulse 500ms infinite")
+          );
+          playBtn.style.display = "none";
+          pauseBtnLines.forEach((line) =>
+            line.setAttribute("class", "lineShow")
+          );
+        }
+        //if pause btn visible: pause audio, stop animation, switch back to play btn.
+        else {
+          audio.pause();
+          //ensure animation starts again in-time...
+          audio.currentTime = Math.round(audio.currentTime * 2) / 2;
+          console.log(audio.currentTime);
+          letters.forEach((letter) => (letter.style.animation = "none"));
+          playBtn.style.display = "grid";
+          pauseBtnLines.forEach((line) =>
+            line.setAttribute("class", "lineHide")
+          );
+        }
+      } else {
+        return;
+      }
+    }
+    //if audio finishes: reset styles
+    document.querySelector("audio").addEventListener("ended", () => {
+      letters.forEach((letter) => (letter.style.animation = "none"));
+      playBtn.style.display = "grid";
+      pauseBtnLines.forEach((line) => line.setAttribute("class", "lineHide"));
+    });
+  </script>
+</html>
