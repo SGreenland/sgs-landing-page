@@ -45,7 +45,7 @@
       }
 
       .logo {
-        font-size: 4em;
+        font-size: 4.2em;
         font-weight: bold;
         text-align: center;
         display: grid;
@@ -87,11 +87,11 @@
       }
 
       @keyframes pulse {
-        from {
+        0% {
           transform: scale(1);
         }
-        to {
-          transform: scale(1.2);
+        100% {
+          transform: scale(0.9);
         }
       }
 
@@ -214,7 +214,11 @@
       <div id="logoContainer">
         <div class="logo"><div class="letter">S</div></div>
         <div class="logo">
-          <audio src="./AUDIO/ON&ON END SAMPLE WAV1_2.wav" id="audio"></audio>
+          <audio
+            src="./AUDIO/ON&ON END SAMPLE WAV1_2.wav"
+            preload="auto"
+            id="audio"
+          ></audio>
           <div class="triangleContainer">
             <svg id="svg" width="100" height="100" onclick="play(), undraw()">
               <polygon
@@ -235,7 +239,7 @@
                 y1="0"
                 y2="100"
                 stroke="chartreuse"
-                stroke-width="50"
+                stroke-width="60"
               ></line>
               <line
                 id="line"
@@ -245,7 +249,7 @@
                 y1="0"
                 y2="100"
                 stroke="chartreuse"
-                stroke-width="50"
+                stroke-width="60"
               ></line>
             </svg>
           </div>
@@ -323,10 +327,10 @@
     function play() {
       if (triangle.style.display === "none") {
         //if play btn visible: play audio, start animation, switch to pause btn.
-        if (playBtn.style.display === "grid") {
+        if (playBtn.style.display === "grid" && audio.readyState > 3) {
           audio.play();
           letters.forEach(
-            (letter) => (letter.style.animation = "pulse 500ms infinite")
+            (letter) => (letter.style.animation = "pulse 495ms infinite ")
           );
           playBtn.style.display = "none";
           pauseBtnLines.forEach((line) =>
